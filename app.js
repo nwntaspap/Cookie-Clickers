@@ -13,15 +13,20 @@ let cps = 0;
 
 // Items object
 let items = {
-  grandmother: { count: 0, cps: 1, cost: 10 },
-  baker: { count: 0, cps: 10, cost: 50 },
-  factory: { count: 0, cps: 100, cost: 5000 },
+  grandmother: { count: 0, cps: 1, cost: 10, baseCost: 10 },
+  baker: { count: 0, cps: 10, cost: 50, baseCost: 50 },
+  factory: { count: 0, cps: 100, cost: 5000, baseCost: 5000 },
 };
 
 // Update the UI
 function updateDisplay() {
   cookieCounter.textContent = counter;
   cookiesPerSec.textContent = `${cps}/s`;
+
+  // Update shop button labels
+  grandmotherBtn.textContent = `Grandmother ${items.grandmother.cost} (Owned: ${items.grandmother.count})`;
+  bakerBtn.textContent = `Baker ${items.baker.cost} (Owned: ${items.baker.count})`;
+  factoryBtn.textContent = `Factory ${items.factory.cost} (Owned: ${items.factory.count})`;
 }
 updateDisplay();
 
@@ -38,6 +43,8 @@ function buyItem(itemKey) {
     counter -= item.cost; // pay cookies
     item.count++; // own one more
     cps += item.cps;
+    // increase the cost with each buy by 15%
+    item.cost = Math.floor(item.cost * 1.15);
     updateDisplay();
   }
 }
@@ -64,10 +71,10 @@ resetBtn.addEventListener("click", function () {
   // Reset game stats
   counter = 0;
   cps = 0;
-  updateDisplay();
 
   for (let key in items) {
     items[key].count = 0; // reset all items
+    items[key].cost = items[key].baseCost;
   }
   updateDisplay();
 });
