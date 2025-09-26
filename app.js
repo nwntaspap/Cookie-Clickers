@@ -27,6 +27,11 @@ function updateDisplay() {
   grandmotherBtn.textContent = `Grandmother ${items.grandmother.cost} (Owned: ${items.grandmother.count})`;
   bakerBtn.textContent = `Baker ${items.baker.cost} (Owned: ${items.baker.count})`;
   factoryBtn.textContent = `Factory ${items.factory.cost} (Owned: ${items.factory.count})`;
+
+  // Enable/disable buttons based on affordability
+  grandmotherBtn.disabled = counter < items.grandmother.cost;
+  bakerBtn.disabled = counter < items.baker.cost;
+  factoryBtn.disabled = counter < items.factory.cost;
 }
 updateDisplay();
 
