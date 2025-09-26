@@ -13,8 +13,8 @@ let cps = 0;
 
 // Items object
 let items = {
-  grandmother: { count: 0, cps: 1, cost: 10, baseCost: 10 },
-  baker: { count: 0, cps: 10, cost: 50, baseCost: 50 },
+  grandmother: { count: 0, cps: 1, cost: 100, baseCost: 10 },
+  baker: { count: 0, cps: 10, cost: 500, baseCost: 50 },
   factory: { count: 0, cps: 100, cost: 5000, baseCost: 5000 },
 };
 

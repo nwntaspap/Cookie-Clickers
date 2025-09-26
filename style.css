@@ -6,7 +6,8 @@
 }
 /*--- Main Styles ---*/
 body {
-  height: 100vh;
+  /* height: 100vh; */
+  padding: 1rem;
   background-color: #0673d4;
   display: grid;
   place-items: center;
