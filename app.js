@@ -18,6 +18,9 @@ let items = {
   factory: { count: 0, cps: 100, cost: 5000, baseCost: 5000 },
 };
 
+// Load saved game (if any)
+loadGame();
+
 // Update the UI
 function updateDisplay() {
   cookieCounter.textContent = counter;
@@ -71,15 +74,46 @@ setInterval(() => {
   updateDisplay();
 }, 1000);
 
+// ---- AUTO-SAVE LOOP ---- //
+setInterval(saveGame, 10000); // every 10 seconds
+
 // Reset Game
 resetBtn.addEventListener("click", function () {
   // Reset game stats
   counter = 0;
   cps = 0;
 
+  // reset all items
   for (let key in items) {
-    items[key].count = 0; // reset all items
+    items[key].count = 0;
     items[key].cost = items[key].baseCost;
   }
+
+  // clear save
+  localStorage.removeItem("cookieGame");
   updateDisplay();
 });
+
+// Save Game
+function saveGame() {
+  let gameState = {
+    counter,
+    cps,
+    items: JSON.parse(JSON.stringify(items)), // deep copy
+  };
+  localStorage.setItem("cookieGame", JSON.stringify(gameState));
+}
+
+// Load game
+function loadGame() {
+  const savedGame = JSON.parse(localStorage.getItem("cookieGame"));
+  if (savedGame) {
+    counter = savedGame.counter;
+    cps = savedGame.cps;
+    items = savedGame.items;
+  }
+  updateDisplay();
+}
+
+// Save when leaving the page
+window.addEventListener("beforeunload", saveGame);
